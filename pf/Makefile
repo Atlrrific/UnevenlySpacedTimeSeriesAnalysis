@@ -4,7 +4,7 @@ C = main.cc rng.cc history.cc simfunctions.cc
 H = smctc.hh sampler.hh particle.hh moveset.hh history.hh rng.hh
 
 PFC = sirTest.cc pffuncs.cc
-PFO = sirTest.o pffuncs.o 
+PFO = sirTest.o pffuncs.o
 PFH = pffuncs.hh
 
 CCFLAGS := $(CCFLAGS) -I../../include -L../../lib

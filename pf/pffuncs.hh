@@ -11,7 +11,8 @@ class cv_obs
 public:
   double x_pos, y_pos;
 };
-
+extern double prevY;
+extern int sampleIndex;
 double logLikelihood(long lTime, const cv_state & X);
 
 smc::particle<cv_state> fInitialise(smc::rng *pRng);

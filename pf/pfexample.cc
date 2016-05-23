@@ -30,13 +30,14 @@ double integrand_var_y(const cv_state&, void*);
 
 int main(int argc, char** argv)
 {
+  printf("%s\n",argv[0] );
   long lNumber = 1000;
   long lIterates;
 
   try {
     //Load observations
     cout << "Opening data.csv"<<endl;
-    lIterates = load_data("data.csv", &y);
+    lIterates = load_data("data.40csv", &y);
 
     //Initialise and run the sampler
     smc::sampler<cv_state> Sampler(lNumber, SMC_HISTORY_NONE);
@@ -109,6 +110,7 @@ long load_data(char const * szName, cv_obs** yp)
       fgets(szBuffer, 1024, fObs);
       (*yp)[i].x_pos = strtod(strtok(szBuffer, ",\r\n "), NULL);
       (*yp)[i].y_pos = strtod(strtok(NULL, ",\r\n "), NULL);
+      printf("HELLO \n" );
     }
   fclose(fObs);
 

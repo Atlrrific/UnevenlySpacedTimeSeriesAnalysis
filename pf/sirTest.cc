@@ -139,7 +139,7 @@ int main(int argc, char** argv)
 
       outFile << n <<","<<ym << "\n";
 
-      cout << ym<< ",";
+      // cout << ym<< ",";
 
     }
     outFile.close();
@@ -171,7 +171,7 @@ long load_data(char const * szName, cv_obs** yp)
       fgets(szBuffer, 1024, fObs);
       (*yp)[i].x_pos = strtod(strtok(szBuffer, ",\r\n "), NULL);
       (*yp)[i].y_pos = strtod(strtok(NULL, ",\r\n "), NULL);
-      printf("y:%f, x:%f \n", (*yp)[i].y_pos, (*yp)[i].x_pos);
+      // printf("y:%f, x:%f \n", (*yp)[i].y_pos, (*yp)[i].x_pos);
 
     }
   fclose(fObs);

@@ -42,7 +42,7 @@ int main(int argc, char** argv)
   // strcat(fileNameStr,argv[2]);
   // strcat(fileNameStr,".csv");
 
-  printf("THE FILE NAME%s\n",argv[2]);
+//  printf("THE FILE NAME%s\n",argv[2]);
   ofstream outFile;
 
   outFile.open (fileNameStr.c_str());
@@ -70,13 +70,13 @@ int main(int argc, char** argv)
     t0 = get_timestamp();
     Sampler.SetMoveSet(Moveset);
     t1 = get_timestamp();
-    cout << "The Set Move Set Ex Time" << (t1 - t0) / 1000000.0L <<endl;
+  //  cout << "The Set Move Set Ex Time" << (t1 - t0) / 1000000.0L <<endl;
 
 
     t0 = get_timestamp();
     Sampler.Initialise();
     t1 = get_timestamp();
-    cout << "The Initialise Ex Time" << (t1 - t0) / 1000000.0L <<endl;
+    //cout << "The Initialise Ex Time" << (t1 - t0) / 1000000.0L <<endl;
 
     // Process
 
@@ -139,7 +139,7 @@ int main(int argc, char** argv)
 
       outFile << n <<","<<ym << "\n";
 
-      // cout << ym<< ",";
+      //cout << ym<< ",";
 
     }
     outFile.close();

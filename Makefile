@@ -1,13 +1,34 @@
-all: pf-example
+.PHONY: docs clean distclean examples
 
-.PHONY: pf-example  clean
+default: libraries examples
+
+all: libraries docs examples
 
 clean:
-	$(MAKE) -Cpf clean
-	$(MAKE) -Crare-events clean
+	make -Csrc clean
+	make -Cexamples clean
+	-rm *~
+	-rm */*~
 
-pf-example:
-	$(MAKE) -Cpf all
+distclean: clean
+	-rm bin/*
+	-rm lib/*
+	-rm -Rf doc/*
 
-rare-events-example:
-	$(MAKE) -Crare-events all
+libraries:
+	make -Csrc all
+
+docs: 
+	make -Csrc/doxygen all
+	make -Cdoc/latex  all
+	cp doc/latex/refman.pdf doc
+
+examples:
+	make -Cexamples all
+
+
+dist: distclean
+	tar -cf ../smctc.tar *
+	bzip2 ../smctc.tar
+	tar -cf ../smctc.tar *	
+	zip -r ../smctc.zip *

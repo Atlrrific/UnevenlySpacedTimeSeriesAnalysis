@@ -1,87 +1,39 @@
-SMCTC 1.0-RC4: Sequential Monte Carlo Template Class
-----------------------------------------------------
-Last modified:       2008-11-27
-Author / Maintainer: Adam M. Johansen (a.m.johansen@warwick.ac.uk)
-Website:             
-http://www2.warwick.ac.uk/fac/sci/statistics/staff/academic/johansen/smctc/
+Sequential Importance Resampling for Unevenly Spaced Time Series Prediction. 
 
+The repo contains the whole SMCTC: Sequential Monte Carlo Template Class in order
+to make the installation and execution faster. 
 
+Compilation and Execution.
+1. 
+- The GNU Scintific Library is a dependency for SMCTC.
+-The first step is to install it with the following command:
+sudo apt-get install gsl-bin libgsl0-dev
 
-This file provides a very brief overview of the SMCTC software. It is not
-intended to replace the documentation available both in the form of the
-automatically generated reference guide or the accompanying article.
+2.
+-To compile first make the libraries by running "make" on the command line. 
+This will compile the library and examples. 
 
-1. Overview:
+3.
+-We are ready to compile and run the program by going to the following path:
+UnevenlySpacedTimeSeriesAnalysis/pf
 
-Sequential Monte Carlo methods are a very general class of Monte Carlo methods
-for sampling from sequences of distributions. Simple examples of these
-algorithms are used very widely in the tracking and signal processing
-literature. Recent developments illustrate that these techniques have much
-more general applicability, and can be applied very effectively to statistical
-inference problems. Unfortunately, these methods are often perceived as being
-computationally expensive and difficult to implement. This software and the
-accompanying article (SMCTC: Sequential Monte Carlo in C++) seeks to
-address both of these problems.
+-To compile simply run make. 
+-this will create a binary called ./pf.
 
-A C++ template class library for the efficient and convenient
-implementation of very general Sequential Monte Carlo algorithms is
-provided. Two example applications are provided: a simple particle filter for
-illustrative purposes and a state-of-the-art algorithm for rare event
-estimation.
+Running the binary:
+To run the binary  you have to pass in three command line arguments:
+./pf <# of Particles> <CSV file path> <Number of iterations>
 
-2. Installation:
+The CSV file path will the file used to simulate a data stream. 
+The number of iterations define the number of predictions the algorithm will take. 
+The algorithm will write the output in CSV format to a file with name <#particles><filename>.
 
-2.1 Prerequisites
-Use of this software requires a working C++ implementation and that the GNU
-Scientific Library (GSL) is installed and working. It is necessary to either have
-a working make environment or to make use of the proprietary project
-and solution file approach provided by Microsoft Visual Studio. If the libraries are not
-available in the directories searched by the compiler then it may be
-necessary to modify the Makefile so that the appropriate search paths are
-supplied to the compiler and linker.
-
-2.2 Installation Procedure
-This section assumes that the Makefile is being used from a command line
-interpreter of some description. Windows users may prefer to make use of the
-Visual studio solution and project files which are provided. See the main
-documentation and the project file itself for details of this alternative.
-
-In a sense, installation is a minimal procedure. The software should be placed
-in an appropriate directory and the command
-make libraries
-within the top-level directory will compile the binary portion of the library
-and copy it to the lib subdirectory.
-
-Several optional steps will make it easier to make use of the library:
-
-After compiling the library there will be a static library named libsmctc.a
-within the lib subdirectory. This should either be copied to your preferred
-library location  (typically /usr/lib on a Linux system) or its locations must
-be specified every time the library is used.
-
-The header files contained within the include subdirectory should be copied to
-a system-wide include directory (such as /usr/include) or it will be necessary
-to specify the location of the SMCTC include directory whenever a file which
-makes use of the library is compiled.
-
-3. Using SMCTC:
-
-In order to use the library one simply needs to write C++ code which makes use
-of the templated-objects provided by the library and then to link the
-resulting object files against the SMCTC library as well as the GSL. The
-example programs can be compiled by entering the command:
-make examples
-in the top-level directory.
-
-The use of a Makefile is not essential at this stage; compilation proceeds
-rather simply in the case of self-contained applications. The following
-commands, for example, are sufficient to compile the example program described
-in section 5.1:
-
-g ++ -I ../../ include -c pfexample . cc pffuncs . cc
-g ++ pfexample . o pffuncs . o -L ../../ lib - lsmctc - lgsl - lgslcblas - opf
-
-It is, of course, advisable to include some additional options to encourage
-the compiler to optimise the code as much as possible once it has been debugged.
-
-Please see the associated documentation for more details.
+The algorithm checks if there is a field on the CSV file with a time stamp that 
+is the same as the current iteration number . 
+As an example: 
+With a file like , 1 100, 2 200, 5 250, 7 220
+The iteration number will start at 1 then check on the csv file if there is a value with time 
+1. In this case there is. Then the algorithm will use this value to smooth out the particles. 
+If we iterate furthermor and we reach iteration number 3, we can see that there is no value on 
+the csv file at time 3. In this case the algorithm will use the previously seen value to predict the 
+the value at time 3. 

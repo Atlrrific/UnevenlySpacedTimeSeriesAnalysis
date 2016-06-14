@@ -35,25 +35,31 @@ double integrand_var_y(const cv_state&, void*);
 
 int main(int argc, char** argv)
 {
+  //Assigning number of particles
   long arg = atol(argv[1]);
+  //Setting up the output file
   string fileNameStr = argv[1];
   fileNameStr = fileNameStr +argv[2];
+
+  //Number of iterations.
+  long lIterates = atol(argv[3]);
+
+
   // strcpy(fileNameStr,argv[1]);
   // strcat(fileNameStr,argv[2]);
   // strcat(fileNameStr,".csv");
 
-  printf("THE FILE NAME%s\n",argv[2]);
+//  printf("THE FILE NAME%s\n",argv[2]);
   ofstream outFile;
 
   outFile.open (fileNameStr.c_str());
 
   long lNumber = arg;
-  long lIterates;
 
   try {
     //Load observations
     cout << "Opening "<<argv[2]<<endl;
-    lIterates = load_data(argv[2], &y);
+     load_data(argv[2], &y);
     cout << "Finish data.csv"<<endl;
 
     //Initialise and run the sampler
@@ -70,13 +76,13 @@ int main(int argc, char** argv)
     t0 = get_timestamp();
     Sampler.SetMoveSet(Moveset);
     t1 = get_timestamp();
-    cout << "The Set Move Set Ex Time" << (t1 - t0) / 1000000.0L <<endl;
+  //  cout << "The Set Move Set Ex Time" << (t1 - t0) / 1000000.0L <<endl;
 
 
     t0 = get_timestamp();
     Sampler.Initialise();
     t1 = get_timestamp();
-    cout << "The Initialise Ex Time" << (t1 - t0) / 1000000.0L <<endl;
+    //cout << "The Initialise Ex Time" << (t1 - t0) / 1000000.0L <<endl;
 
     // Process
 
@@ -85,7 +91,7 @@ int main(int argc, char** argv)
     double aveInter = 0.0;
 
 
-    for(int n=1 ; n < 1096 ; ++n) {
+    for(int n=1 ; n < lIterates ; ++n) {
 
 
       // Iterate moves the particles
@@ -135,11 +141,11 @@ int main(int argc, char** argv)
 
       // cout << "Inte:" << (t1 - t0) / 1000000.0L <<"\n " << endl;
 
-      // cout << "Sample num:"<< n << " "<< ym << ","<< yv << ","  << endl;
+      cout << "Sample num:"<< n << " "<< ym << ","<< yv << ","  << endl;
 
       outFile << n <<","<<ym << "\n";
 
-      // cout << ym<< ",";
+      //cout << ym<< ",";
 
     }
     outFile.close();
